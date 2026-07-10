@@ -1,0 +1,3 @@
+/Users/zacharyfarbman/Documents/Seneca/PRG210_zacharyfarbman/course_management_system/build/CMakeFiles/course_management_system.dir
+/Users/zacharyfarbman/Documents/Seneca/PRG210_zacharyfarbman/course_management_system/build/CMakeFiles/edit_cache.dir
+/Users/zacharyfarbman/Documents/Seneca/PRG210_zacharyfarbman/course_management_system/build/CMakeFiles/rebuild_cache.dir
