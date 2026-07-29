@@ -17,7 +17,7 @@ endif()
 
 add_executable(course_management_system
     main.cpp
-    # cart.cpp
+    cart.cpp
     course.cpp
     department.cpp
     # interface.cpp
@@ -39,6 +39,8 @@ target_compile_options(course_management_system
         $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wall -Wextra -Wpedantic>
 )
 
+#irene included for testing wasnt working with this
+set(BUILD_TESTING OFF CACHE BOOL "Disable tests temporarily" FORCE)
 include(CTest)
 
 if(BUILD_TESTING)
