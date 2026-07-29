@@ -17,10 +17,10 @@ endif()
 
 add_executable(course_management_system
     main.cpp
-    cart.cpp
+    # cart.cpp
     course.cpp
-    department.cpp
-    interface.cpp
+    # department.cpp
+    # interface.cpp
 )
 
 target_include_directories(course_management_system
