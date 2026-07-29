@@ -16,6 +16,8 @@ private:
 
 public:
   Cart();
+  Cart(const Cart &);
+  Cart &operator=(const Cart &other);
   ~Cart();
 
   void addCourse(const Course &course);
