@@ -40,7 +40,7 @@ target_compile_options(course_management_system
 )
 
 #irene included for testing wasnt working with this
-set(BUILD_TESTING OFF CACHE BOOL "Disable tests temporarily" FORCE)
+# set(BUILD_TESTING OFF CACHE BOOL "Disable tests temporarily" FORCE)
 include(CTest)
 
 if(BUILD_TESTING)
@@ -62,6 +62,8 @@ if(BUILD_TESTING)
     add_executable(course_management_tests
         tests/course_tests.cpp
         tests/department_tests.cpp
+        tests/cart_tests.cpp
+        cart.cpp
         course.cpp
         department.cpp
     )
