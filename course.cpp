@@ -17,6 +17,6 @@ double Course::getPrice() const { return price; }
 
 void Course::display() const {
   std::cout << course_number << " - " << course_name
-            << " | Schdule: " << schedule << " | Price : $" << std::fixed
+            << " | Schedule: " << schedule << " | Price : $" << std::fixed
             << std::setprecision(2) << price << std::endl;
 }
