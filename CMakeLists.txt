@@ -19,7 +19,7 @@ add_executable(course_management_system
     main.cpp
     # cart.cpp
     course.cpp
-    # department.cpp
+    department.cpp
     # interface.cpp
 )
 
