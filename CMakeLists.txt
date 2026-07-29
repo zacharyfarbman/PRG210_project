@@ -38,3 +38,54 @@ target_compile_options(course_management_system
     PRIVATE
         $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wall -Wextra -Wpedantic>
 )
+
+include(CTest)
+
+if(BUILD_TESTING)
+    include(FetchContent)
+
+    FetchContent_Declare(
+        googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG v1.17.0
+        GIT_SHALLOW TRUE
+    )
+
+    if(MSVC)
+        set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    endif()
+
+    FetchContent_MakeAvailable(googletest)
+
+    add_executable(course_management_tests
+        tests/course_tests.cpp
+        tests/department_tests.cpp
+        course.cpp
+        department.cpp
+    )
+
+    target_include_directories(course_management_tests
+        PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+
+    set_target_properties(course_management_tests PROPERTIES
+        CXX_STANDARD ${PROJECT_CXX_STANDARD}
+        CXX_STANDARD_REQUIRED ON
+        CXX_EXTENSIONS OFF
+    )
+
+    target_compile_options(course_management_tests
+        PRIVATE
+            $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:
+                -Wall -Wextra -Wpedantic>
+    )
+
+    target_link_libraries(course_management_tests
+        PRIVATE
+            GTest::gtest_main
+    )
+
+    include(GoogleTest)
+    gtest_discover_tests(course_management_tests)
+endif()
