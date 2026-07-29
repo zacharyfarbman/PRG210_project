@@ -58,3 +58,50 @@ TEST(CartTest, CartCanBeReusedAfterBeingCleared) {
   EXPECT_EQ(cart.getCourseCount(), 1U);
   EXPECT_NEAR(cart.getTotalCost(), 508.50, 0.001);
 }
+
+TEST(CartTest, CopyConstructorPerformsDeepCopy) {
+  Cart original;
+  original.addCourse(Course("PRG210", "C++ Programming", "M/W", 500.00));
+
+  Cart copy(original);
+
+  original.clearCart();
+
+  copy.addCourse(Course("NTF201", "Networking Fundamentals", "T/R", 450.00));
+
+  EXPECT_TRUE(original.isEmpty());
+  EXPECT_EQ(copy.getCourseCount(), 2U);
+  EXPECT_NEAR(copy.getTotalCost(), 1073.50, 0.001);
+}
+
+TEST(CartTest, AssignmentOperatorPerformsDeepCopy) {
+  Cart source;
+  source.addCourse(Course("PRG210", "C++ Programming", "M/W", 500.00));
+
+  Cart destination;
+  destination.addCourse(
+      Course("MTH200", "Discrete Mathematics", "W/F", 300.00));
+
+  Cart &result = (destination = source);
+
+  source.clearCart();
+
+  destination.addCourse(
+      Course("NTF201", "Networking Fundamentals", "T/R", 450.00));
+
+  EXPECT_EQ(&result, &destination);
+  EXPECT_TRUE(source.isEmpty());
+  EXPECT_EQ(destination.getCourseCount(), 2U);
+  EXPECT_NEAR(destination.getTotalCost(), 1073.50, 0.001);
+}
+
+TEST(CartTest, SelfAssignmentPreservesCart) {
+  Cart cart;
+  cart.addCourse(Course("PRG210", "C++ Programming", "M/W", 500.00));
+
+  Cart &result = (cart = cart);
+
+  EXPECT_EQ(&result, &cart);
+  EXPECT_EQ(cart.getCourseCount(), 1U);
+  EXPECT_NEAR(cart.getTotalCost(), 565.00, 0.001);
+}
