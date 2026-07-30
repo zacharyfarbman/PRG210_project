@@ -64,9 +64,11 @@ if(BUILD_TESTING)
         tests/course_tests.cpp
         tests/department_tests.cpp
         tests/cart_tests.cpp
+        tests/csv_utils_tests.cpp
         cart.cpp
         course.cpp
         department.cpp
+        CSVUtils.cpp
     )
 
     target_include_directories(course_management_tests
