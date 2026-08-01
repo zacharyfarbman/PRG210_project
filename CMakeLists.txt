@@ -21,7 +21,7 @@ add_executable(course_management_system
     course.cpp
     department.cpp
     CSVUtils.cpp
-    # interface.cpp
+    interface.cpp
 )
 
 target_include_directories(course_management_system
