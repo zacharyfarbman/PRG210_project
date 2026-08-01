@@ -3,6 +3,7 @@
 #include "cart.h"
 #include "course.h"
 #include "department.h"
+#include "admin_interface.h"
 
 // Global department storage used by the CSV utility functions.
 Department* StoreDepartments = nullptr;
@@ -10,6 +11,7 @@ int TotalDepartments = 0;
 const char* csvFile = "courses.csv";
 
 int main() {
+
   Cart cart;
 
   const Course course1("PRG210", "Programming 2", "M/W", 500.00);
@@ -33,6 +35,9 @@ int main() {
 
   std::cout << std::boolalpha
             << "Cart is empty after clearing: " << cart.isEmpty() << '\n';
+
+  AdminInterface admin;
+  admin.run();
 
   // Release the global dynamic department array.
   delete[] StoreDepartments;
