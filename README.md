@@ -1,10 +1,10 @@
-Course Management System
+# Course Management System
 A console-based C++ application for managing departments and courses and for
 allowing students to browse available courses, build a cart, and check out.
 The project demonstrates encapsulation, inheritance, runtime polymorphism,
 dynamic memory management, deep copying, file persistence, input validation,
 and automated testing.
-Features
+## Features
 Student interface
 Browse all available departments.
 View the courses offered by a selected department.
@@ -24,13 +24,13 @@ Starts with an empty store when the CSV file does not exist.
 Validates CSV records before replacing the current in-memory data.
 Preserves existing data if loading fails.
 Writes prices with two decimal places.
-Requirements
+## Requirements
 CMake 3.20 or newer
 A compiler supporting C++17, C++20, or C++23
 Git and an internet connection during the first test configuration so CMake
 can download GoogleTest
 The project has been designed to compile with GCC, Clang, and Apple Clang.
-Build
+## Build
 From the repository root, configure the project with the desired C++ standard:
 ```bash
 cmake -S . -B build -DPROJECT_CXX_STANDARD=17
@@ -40,7 +40,7 @@ Build the application and test executable:
 ```bash
 cmake --build build --parallel
 ```
-Run
+## Run
 On Linux or macOS:
 ```bash
 ./build/course_management_system
@@ -54,7 +54,7 @@ depending on the selected CMake generator:
 Run the program from the repository root so the relative path `courses.csv`
 refers to the CSV file stored beside the source files.
 Using the application
-Role selection
+## Role selection
 The program loads `courses.csv` and then displays:
 ```text
 ===== Course Management System =====
@@ -65,7 +65,7 @@ Enter your choice [1, 2]:
 The prompt repeats until a valid selection is entered. The selected derived
 interface is created through an `Interface*`, and `run()` is dispatched using
 runtime polymorphism.
-Student menu
+### Student menu
 ```text
 ===== Student Menu =====
 1. View cart
@@ -81,7 +81,7 @@ Return to the student menu and select View cart.
 Select Checkout to complete the purchase.
 The cart is stored only in memory. Checkout clears the cart and does not modify
 the CSV course catalogue.
-Admin menu
+### Admin menu
 ```text
 ===== Admin Menu =====
 1. List departments
@@ -93,14 +93,14 @@ Admin menu
 Admin changes remain in memory until Save changes is selected. Exiting
 without saving does not write newly added departments or courses to the CSV
 file.
-Valid course schedules are:
+### Valid course schedules are:
 `M/W`
 `T/R`
 `W/F`
 Course prices must be positive numbers. Department names, course numbers, and
 course names cannot be empty or contain commas because commas delimit CSV
 fields.
-CSV file format
+## CSV file format
 The first line contains the total number of departments. Each department record
 contains its name and course count, followed by that many course records.
 ```text
@@ -108,7 +108,7 @@ contains its name and course count, followed by that many course records.
 <department name>,<course count>
 <course number>,<course name>,<schedule>,<price>
 ```
-Example:
+### Example:
 ```csv
 2
 Programming,2
@@ -119,7 +119,7 @@ NTF201,Networking Fundamentals,W/F,525.00
 ```
 The current CSV implementation does not support quoted fields, so names cannot
 contain commas.
-Architecture
+## Architecture
 ```mermaid
 classDiagram
     class Course {
@@ -162,8 +162,7 @@ classDiagram
     Cart *-- Course
     StudentInterface *-- Cart
 ```
-Class responsibilities
-Class or module	Responsibility
+## Class responsibilities
 `Course`	Stores a course number, name, schedule, and price.
 `Department`	Owns a department name and a dynamic array of courses.
 `Cart`	Owns selected courses and schedules and calculates the total with 13% tax.
@@ -172,16 +171,17 @@ Class or module	Responsibility
 `StudentInterface`	Implements department browsing, cart management, and checkout.
 `CSVUtils`	Loads and saves the global department store using CSV files.
 `main.cpp`	Owns the global store, selects a role, runs the selected interface, and performs final cleanup.
-Object-oriented design
-Encapsulation
+
+## Object-oriented design
+### Encapsulation
 All class data members are private. State is accessed or modified through
 public member functions.
-Inheritance and polymorphism
+### Inheritance and polymorphism
 `AdminInterface` and `StudentInterface` derive from the abstract `Interface`
 base class. `main.cpp` stores the selected object in an `Interface*` and calls
 the overridden `run()` function. The base destructor is virtual so deleting the
 object through the base pointer is safe.
-Dynamic arrays and deep copying
+### Dynamic arrays and deep copying
 `Department` and `Cart` own dynamically allocated arrays. Both implement a
 destructor, copy constructor, and overloaded assignment operator so copies own
 independent memory. This is the Rule of Three.
@@ -191,17 +191,18 @@ Copies the existing elements.
 Adds the new element.
 Deletes the old array.
 Stores the expanded array and updates its count.
-Ownership
+### Ownership
 `main.cpp` owns and deletes the global `StoreDepartments` array.
 Each `Department` owns its department-name character array and course array.
 `StudentInterface` owns its `Cart` object.
 Each `Cart` owns its course and schedule arrays.
 `Interface` refers to input and output streams but does not own or delete
 them.
-Input validation
+### Input validation
 The shared `Interface` class reads complete lines before parsing them. This
 prevents failed formatted extraction from leaving invalid characters in the
 input stream.
+
 Validation rejects:
 Non-numeric or partially numeric menu selections
 Choices outside the permitted range
@@ -210,6 +211,7 @@ Commas in CSV-backed text fields
 Zero, negative, malformed, or partially numeric prices
 Schedules other than `M/W`, `T/R`, and `W/F`
 Tests
+
 The GoogleTest suite covers:
 `Course` construction and accessors
 `Department` dynamic growth, indexed access, deep copying, assignment, and
@@ -217,6 +219,7 @@ self-assignment
 `Cart` additions, totals with tax, clearing, reuse, and copy semantics
 CSV loading, saving, formatting, round trips, malformed input, and failure
 safety
+
 Run all registered tests with:
 ```bash
 ctest --test-dir build --output-on-failure
@@ -229,7 +232,8 @@ On a multi-configuration Windows generator, use:
 ```powershell
 .\build\Debug\course_management_tests.exe
 ```
-Project structure
+
+### Project structure
 ```text
 .
 ├── CMakeLists.txt
@@ -255,7 +259,8 @@ Project structure
     ├── csv_utils_tests.cpp
     └── department_tests.cpp
 ```
-Troubleshooting
+
+## Troubleshooting
 The program reports that the CSV file was not found
 Run the executable from the repository root or ensure `courses.csv` exists in
 the process's working directory.
